@@ -1,0 +1,23 @@
+## input_booleans
+
+  
+  temp_regel:
+    name: Temeratuur regelaar 
+    initial: 15
+    min: 14
+    max: 22
+    step: 0.5
+
+  aan:
+    name: Kachel default aan temp. 
+    initial: 20
+    min: 14
+    max: 22
+    step: 0.5
+
+  uit:
+    name: Kachel default uit temp.
+    initial: 16
+    min: 14
+    max: 22
+    step: 0.5

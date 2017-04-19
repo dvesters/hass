@@ -1,0 +1,39 @@
+
+- alias: 'Diskspace check 3GB'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.disk_free_
+      below: 3
+  action:
+    - service: notify.pushbullet
+      data: {
+        title: "Disk space below 3GB ({{ states.sensor.disk_free__state.state }}GB)",
+        message: "disk space low on Raspberry Pi",
+        target: "device/iPhone van Donovan"
+        }
+
+- alias: 'Diskspace check 2GB'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.disk_free_
+      below: 2
+  action:
+    - service: notify.pushbullet
+      data: {
+        title: "Disk space below 2GB ({{ states.sensor.disk_free__state.state }}GB)",
+        message: "disk space low on Raspberry Pi",
+        target: "device/iPhone van Donovan"
+        }
+
+- alias: 'Diskspace check 1GB'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.disk_free_
+      below: 1
+  action:
+    - service: notify.pushbullet
+      data: {
+        title: "Disk space below 1GB ({{ states.sensor.disk_free__state.state }}GB)",
+        message: "disk space low on Raspberry Pi",
+        target: "device/iPhone van Donovan"
+        }

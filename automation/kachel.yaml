@@ -1,0 +1,145 @@
+
+- alias: 'Kachel aan (obv temperatuur slider)'
+  trigger:
+    - platform: template
+      value_template: "{% if states('sensor.min_marge_temperatuur') > states('sensor.temperature') %}true{% else %}false{% endif %}"
+  condition:
+    condition: and
+    conditions: 
+      - condition: state
+        entity_id: switch.kachel
+        state: 'off'
+  action:
+    - service: switch.turn_on
+      entity_id: switch.kachel
+#    - service: notify.pushbullet
+#      data: {
+#        title: "Kachel aan. min: {{ states.sensor.min_marge_temperatuur.state }}/cur: {{ states.sensor.temperature.state }}",
+#        message: "min: {{ states.sensor.min_marge_temperatuur.state }}   max: {{ states.sensor.target_temperatuur.state }}   cur: {{ states.sensor.temperature.state }}",
+#        target: "device/iPhone van Donovan"
+#        }
+
+- alias: 'Kachel uit (obv temperatuur slider)'
+  trigger:
+    - platform: template
+      value_template: "{% if states('sensor.target_temperatuur') < states('sensor.temperature') %}true{% else %}false{% endif %}"
+  condition:
+    condition: and
+    conditions: 
+      - condition: state
+        entity_id: switch.kachel
+        state: 'on'
+  action:
+    - service: switch.turn_off
+      entity_id: switch.kachel
+#    - service: notify.pushbullet
+#      data: {
+#        title: "Kachel uit. max: {{ states.sensor.target_temperatuur.state }}/cur: {{ states.sensor.temperature.state }}",
+#        message: "min: {{ states.sensor.min_marge_temperatuur.state }}   max: {{ states.sensor.target_temperatuur.state }}   cur: {{ states.sensor.temperature.state }}",
+#        target: "device/iPhone van Donovan"
+#        }
+
+- alias: 'Kachel aan (obv tijd 06:30)'
+  trigger:
+    platform: time
+    after: "06:30:00"
+  action:
+    - service: input_slider.select_value
+      data_template:
+       entity_id: input_slider.temp_regel
+       value: 18.5
+
+- alias: 'Kachel uit (obv tijd 07:15)'
+  trigger:
+    platform: time
+    after: "07:15:00"
+  action:
+    - service: input_slider.select_value
+      data_template:
+       entity_id: input_slider.temp_regel
+       value: 15
+
+- alias: 'Kachel uit (obv licht schakeling 22:00>)'
+  trigger:
+    platform: state
+    entity_id: group.lampen_woonkamer
+    state: 'off'
+  condition:
+    condition: and
+    conditions: 
+      - condition: time
+        after: '00:22:00'
+        before: '00:06:00'
+  action:
+    - service: input_slider.select_value
+      data_template:
+       entity_id: input_slider.temp_regel
+       value: 15
+
+- alias: 'Kachel uit (obv tijd 24:00)'
+  trigger:
+    platform: time
+    after: '00:00:01'
+  condition:
+    condition: and
+    conditions: 
+      - condition: time
+        after: '00:00:01'
+        before: '00:06:00'
+  action:
+    - service: input_slider.select_value
+      data_template:
+       entity_id: input_slider.temp_regel
+       value: 15
+
+- alias: 'Kachel aan (obv aanwezigheid)'
+  trigger:
+    - platform: state
+      entity_id: device_tracker.iphonevandonovan, device_tracker.iphonevaningeli
+      to: 'home'
+  condition:
+    condition: and
+    conditions:
+      - condition: time
+        after: '08:00:00'
+        before: '23:15:00'
+      - condition: or
+        conditions:
+        - condition: state
+          entity_id: device_tracker.iphonevaningeli
+          state: 'home'
+        - condition: state
+          entity_id: device_tracker.iphonevandonovan
+          state: 'home'
+  action:
+    - service: input_slider.select_value
+      data_template:
+       entity_id: input_slider.temp_regel
+       value: 18.5
+    - service: input_boolean.turn_on
+      data:
+       entity_id: input_boolean.kachelauto
+
+- alias: 'Kachel uit (obv aanwezigheid)'
+  trigger:
+    - platform: state
+      entity_id: device_tracker.iphonevandonovan, device_tracker.iphonevaningeli
+      from: 'home'
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.kachelauto
+      state: 'on'
+    - condition: template
+      value_template: "{% if states('device_tracker.iphonevandonovan') != 'home' %}true{% else %}false{% endif %}"
+    - condition: template
+      value_template: "{% if states('device_tracker.iphonevaningeli') != 'home' %}true{% else %}false{% endif %}"
+  action:
+    - service: input_slider.select_value
+      data_template:
+       entity_id: input_slider.temp_regel
+       value: 15
+    - service: input_boolean.turn_off
+      data:
+       entity_id: input_boolean.kachelauto

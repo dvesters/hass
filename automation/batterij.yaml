@@ -1,0 +1,14 @@
+
+- alias: 'Batterij notificatie (obv iPhone Donovan laag =<10%)'
+  trigger:
+    - platform: numeric_state
+      entity_id: device_tracker.iphonevandonovan
+      value_template: '{{ state.attributes.battery }}'
+      below: 10
+  action:
+    - service: notify.pushbullet
+      data: {
+        title: "Batterij laag iPhone Donovan",
+        message: "Batterij iPhone Donovan ({{ states.sensor.battery_iphonedonovan.state }}%)",
+        target: "device/iPhone van Donovan"
+        }

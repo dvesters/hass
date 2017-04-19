@@ -1,0 +1,15 @@
+
+- alias: 'Bezoek notificatie (obv wifi_bezoekers)'
+  trigger:
+    platform: state
+    entity_id: group.wifi_bezoekers
+    state: 'home'
+  action :
+    service: notify.pushbullet
+    data: {
+      title: "We hebben bezoek",
+      message: " Bezoek",
+#      message: " entity_id: {{ trigger.entity_id }} to_entity: {{ trigger.to_state.entity_id }} to_object: {{ trigger.to_state.object_id }} to_state: {{ trigger.to_state.state }} ",
+#      message: "{{ group.wifi_bezoekers }}, {{ states.group.wifi_bezoekers }},{{ status.group.wifi_bezoekers.state }}",
+      target: "device/iPhone van Donovan"
+      }

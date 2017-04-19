@@ -1,0 +1,157 @@
+
+- platform: openweathermap
+  api_key: !secret openweathermap_api_key
+  monitored_conditions:
+    - weather
+    - temperature
+    - wind_speed
+    - humidity
+    - pressure
+    - clouds
+    - rain
+    - snow
+
+#- platform: speedtest
+#  minute:
+#    - 0
+#    - 30
+#  monitored_conditions:
+#    - ping
+#    - download
+#    - upload
+
+- platform: mqtt
+  name: "Temperature"
+  state_topic: "sensor/temperature"
+  qos: 0
+  unit_of_measurement: "ºC"
+
+- platform: mqtt
+  name: "Humidity"
+  state_topic: "sensor/humidity"
+  qos: 0
+  unit_of_measurement: "%"
+
+#- platform: command_line
+#  command: sudo /usr/local/bin/light_sensor.sh 10
+#  name: Light
+#  unit_of_measurement: "Light"
+
+- platform: buienradar
+  name: "Buienradar"
+  timeframe: 600
+
+- platform: iss
+
+- platform: systemmonitor
+  resources:
+    - type: disk_use_percent
+      arg: /
+    - type: disk_use
+      arg: /
+    - type: disk_free
+      arg: /
+#    - type: memory_use_percent
+#    - type: memory_use
+#    - type: memory_free
+#    - type: swap_use_percent
+#    - type: swap_use
+#    - type: swap_free
+#    - type: network_in
+
+- platform: template
+  sensors:
+    min_marge_temperatuur:
+      unit_of_measurement: 'ºC'
+      value_template: '{{ states.input_slider.temp_regel.state | float - 0.2 }}'
+
+- platform: template
+  sensors:
+    next_rising:
+      value_template: '{{ states.sun.sun.attributes.next_rising }}'
+
+- platform: template
+  sensors:
+    next_setting:
+      value_template: '{{ states.sun.sun.attributes.next_setting }}'
+
+- platform: template
+  sensors:
+    target_temperatuur:
+      unit_of_measurement: 'ºC'
+      value_template: >-
+        {%- if states.input_slider.temp_regel.state %}
+            {{ states.input_slider.temp_regel.state }}
+        {% else %}
+            {{ states.sensor.target_temperatuur.state }}
+        {%- endif %}
+
+- platform: template
+  sensors:
+    battery_iphoneingeli:
+      unit_of_measurement: '%'
+      value_template: >-
+        {%- if states.device_tracker.iphonevaningeli.attributes.battery %}
+            {{ states.device_tracker.iphonevaningeli.attributes.battery }}
+        {% else %}
+            {{ states.sensor.battery_iphoneingeli.state }}
+        {%- endif %}
+
+- platform: template
+  sensors:
+    battery_iphonedonovan:
+      unit_of_measurement: '%'
+      value_template: >-
+        {%- if states.device_tracker.iphonevandonovan.attributes.battery %}
+            {{ states.device_tracker.iphonevandonovan.attributes.battery }}
+        {% else %}
+            {{ states.sensor.battery_iphonedonovan.state }}
+        {%- endif %}
+
+- platform: template
+  sensors:
+    donovan_home:
+      value_template: >-
+        {%- if states.device_tracker.iphonevandonovan.state %}
+            {{ states.device_tracker.iphonevandonovan.state }}
+        {% else %}
+            {{ states.sensor.donovan_home.state }}
+        {%- endif %}
+
+- platform: google_travel_time
+  name: Donovan naar huis
+  api_key: !secret google_travel_time_donovan_api_key
+  origin: device_tracker.iphonevandonovan
+  destination: zone.home
+
+- platform: google_travel_time
+  name: Ingeli naar huis
+  api_key: !secret google_travel_time_donovan_api_key
+  origin: device_tracker.iphonevaningeli
+  destination: zone.home
+
+
+
+
+# Prediction of weather
+#sensor:
+#   platform: yr
+
+## Example configuration.yaml entry
+#  platform: dht
+#  sensor: DHT11
+#  pin: 5
+#  name: Living Room
+#  monitored_conditions:
+#     - temperature
+#     - humidityIN
+
+#- platform: command_line
+#  command: sudo cat /tmp/Huawei_battery.last
+#  name: Huawei battery
+#  unit_of_measurement: "%"
+
+#- platform: command_line
+#  command: sudo cat /tmp/Huawei_battery.status
+#  name: Huawei battery status
+

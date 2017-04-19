@@ -1,0 +1,34 @@
+
+- alias: 'Lampen (Bedtijd aankondiging 01:00)'
+  trigger:
+    platform: time
+    after: "1:00:00"
+  action:
+   - service: switch.turn_off
+     entity_id: switch.floortje
+   - delay: 00:00:10
+   - service: switch.turn_on
+     entity_id: switch.floortje
+   - delay: 00:00:10
+   - service: switch.turn_off
+     entity_id: switch.floortje
+   - delay: 00:00:10
+   - service: switch.turn_on
+     entity_id: switch.floortje
+
+- alias: 'Lampen uit (obv tijd 01:15)'
+  trigger:
+    platform: time
+    after: "1:15:00"
+  action:
+    service: switch.turn_off
+    entity_id: group.lampen_woonkamer
+
+- alias: 'Lampen aan (obv zonsondergang)'
+  trigger:
+    platform: sun
+    event: sunset
+    offset: "-00:30:00"
+  action:
+    service: switch.turn_on
+    entity_id: group.lampen_woonkamer

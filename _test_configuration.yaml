@@ -1,0 +1,23 @@
+
+panel_iframe:
+  buienradarnl:
+    title: 'Buien radar Nederland'
+    url: 'https://api.buienradar.nl/image/1.0/RadarMapNL?w=500&h=512'
+  buienradarzwolle:
+    title: 'Buien radar Zwolle'
+    url: 'https://gadgets.buienradar.nl/gadget/zoommap/?lat=52.5125&lng=6.09444&overname=2&zoom=13&naam=zwolle&size=3&voor=1'
+    
+panel_custom:
+  - name: ract
+    sidebar_title: TodoMVC
+    sidebar_icon: mdi:work
+    url_path: schakelaar
+    webcomponent_path: /home/pi/.homeassistant/panels/ract.html 
+#    config:
+#      hello: MAIN
+
+camera:
+  name: Donovan
+  platform: generic
+  still_image_url: https://maps.googleapis.com/maps/api/staticmap?center={{ states.device_tracker.iphonevandonovan.attributes.latitude }},{{ states.device_tracker.iphonevandonovan.attributes.longitude }}&zoom=13&size=500x500&maptype=roadmap&markers=color:blue%7Clabel:D%7C{{ states.device_tracker.iphonevandonovan.attributes.latitude }},{{ states.device_tracker.iphonevandonovan.attributes.longitude }}
+  limit_refetch_to_url_change: true

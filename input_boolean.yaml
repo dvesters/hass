@@ -1,0 +1,41 @@
+## input_booleans
+
+  switchkersboom:
+   name: Kerstboom - automatisch schakelen
+   initial: on
+   icon: mdi:pine-tree
+
+  reminderplantenwater:
+   name: Planten - Reminder water geven
+   initial: on
+   icon: mdi:flower
+
+  controleerplanten:
+   name: Planten - Controleren
+   initial: on
+   icon: mdi:flower
+
+  bewaking:
+   name: Bewaking - automatisch schakelen
+   initial: off
+   icon: mdi:camcorder
+
+  vakantiedonovan:
+   name: Vakantie - Donovan
+   initial: off
+   icon: mdi:airplane
+
+  vakantieingeli:
+   name: Vakantie - Ingeli
+   initial: off
+   icon: mdi:airplane
+
+  playmedia:
+   name: Media - play media on Chromecast
+   initial: off
+   icon: mdi:google-chrome
+
+  kachelauto:
+   name: Kachel automatisch regelen
+   initial: on
+   icon: mdi:candle

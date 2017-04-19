@@ -1,0 +1,503 @@
+
+#################################################################
+## Automations
+#################################################################
+########- alias: 'Kerstboom schakelen werkdagen'
+########  trigger:
+########    - platform: state
+########      entity_id: device_tracker.iphonevandonovan, device_tracker.iphonevaningeli
+########      to: 'home'
+########  condition:
+########    condition: and
+########    conditions:
+########      - condition: time
+########	after: '13:00:00'
+########      - condition: state
+########	entity_id: input_boolean.kerstboomswitch
+########	state: 'on'
+########      - condition: time
+########	weekday:
+########	  - tue
+########	  - wed
+########	  - thu
+########	  - fri
+########  action:
+########    service: switch.turn_on
+########    entity_id: switch.kerstboom
+
+########- alias: 'Kerstboom schakelen thuis dagen'
+########  trigger:
+########    - platform: time
+########      after: '15:00:00'
+########  condition:
+########    condition: and
+########    conditions:
+########      - condition: state
+########	entity_id: input_boolean.kerstboomswitch
+########	state: 'on'
+########      - condition: time
+########	weekday:
+########	  - mon
+########	  - sat
+########	  - sun
+########  action:
+########    service: switch.turn_on
+########    entity_id: switch.kerstboom
+
+########- alias: Kerstboom aan ochtend
+########  trigger:
+########    platform: time
+########    after: "07:00:00"
+########  action:
+########    service: switch.turn_on
+########    entity_id: switch.kerstboom
+
+########- alias: Kerstboom uit ochtend
+########  trigger:
+########    platform: time
+########    after: "08:00:00"
+########  condition:
+########    condition: or
+########    conditions:
+########      - condition: and
+########	conditions:
+########	 - condition: state
+########	   entity_id: input_boolean.kerstboomswitch
+########	   state: 'on'
+########	 - condition: time
+########	   weekday:
+########	     - mon
+########	     - tue
+########	     - wed
+########	     - thu
+########	     - fri
+########      - condition: and
+########	conditions:
+########	 - condition: state
+########	   entity_id: input_boolean.kerstboomswitch
+########	   state: 'on'
+########	 - condition: time
+########	   weekday:
+########	     - sat
+########	     - sun
+########	 - condition: state
+########	   entity_id: device_tracker.iphonevandonovan
+########	   state: 'home'
+########	 - condition: state
+########	   entity_id: device_tracker.iphonevaningeli
+########	   state: 'home'
+########  action:
+########    service: switch.turn_off
+########    entity_id: switch.kerstboom
+
+########- alias: Kerstboom uit avond
+########  trigger:
+########    platform: time
+########    after: "00:30:00"
+########  action:
+########    service: switch.turn_off
+########    entity_id: switch.kerstboom
+
+#  condition:
+#    - condition: and
+#      conditions:
+#       - condition: state
+#         entity_id: input_boolean.kachelauto
+#         state: 'on'
+
+#    - service: input_boolean.turn_off
+#      data:
+#        entity_id: input_boolean.kachelauto
+
+########- alias: 'Ingeli niet thuis'
+########  trigger:
+########    - platform: state
+########      entity_id: device_tracker.iphonevaningeli
+########      from: 'home'
+########  condition:
+########    condition: and
+########    conditions:
+########    - condition: template
+########      value_template: "{% if states('device_tracker.iphonevandonovan') != 'home' %}true{% else %}false{% endif %}"
+########  action:
+########    - service: notify.pushbullet
+########      data: {
+########        title: "Ingeli vertrekt",
+########        message: "Ingeli vertrekt",
+########        target: "device/iPhone van Donovan"
+########        }
+########
+########- alias: 'Ingeli thuis'
+########  trigger:
+########    - platform: state
+########      entity_id: device_tracker.iphonevaningeli
+########      to: 'home'
+########  condition:
+########    condition: and
+########    conditions:
+########    - condition: template
+########      value_template: "{% if states('device_tracker.iphonevandonovan') != 'home' %}true{% else %}false{% endif %}"
+########  action:
+########    - service: notify.pushbullet
+########      data: {
+########        title: "Ingeli is thuis",
+########        message: "Ingeli is thuis",
+########        target: "device/iPhone van Donovan"
+########        }
+
+########- alias: 'Lampen (Bedtijd aankondiging 01:00)'
+########  trigger:
+########    platform: time
+########    after: "1:00:00"
+########  action:
+########   - service: switch.turn_off
+########     entity_id: switch.floortje
+########   - delay: 00:00:10
+########   - service: switch.turn_on
+########     entity_id: switch.floortje
+########   - delay: 00:00:10
+########   - service: switch.turn_off
+########     entity_id: switch.floortje
+########   - delay: 00:00:10
+########   - service: switch.turn_on
+########     entity_id: switch.floortje
+########
+########- alias: 'Lampen uit (obv tijd 01:15)'
+########  trigger:
+########    platform: time
+########    after: "1:15:00"
+########  action:
+########    service: switch.turn_off
+########    entity_id: group.lampen_woonkamer
+########
+########- alias: 'Lampen aan (obv zonsondergang)'
+########  trigger:
+########    platform: sun
+########    event: sunset
+########    offset: "-00:30:00"
+########  action:
+########    service: switch.turn_on
+########    entity_id: group.lampen_woonkamer
+
+#- alias: 'Batterij notificatie (obv iPhone Donovan opgeladen)'
+#  trigger:
+#    - platform: numeric_state
+#      entity_id: device_tracker.iphonevandonovan
+#      value_template: '{{ state.attributes.battery }}'
+#      above: 100
+#  action:
+#    service: notify.pushbullet
+#    data: {"title": "Batterij iPhone Donovan", "message":"Batterij iPhone Donovan volledig opgeladen ({{ states.sensor.battery_iphonedonovan.state }}%).", "target":"device/iPhone van Donovan"}
+
+########- alias: 'Batterij notificatie (obv iPhone Donovan laag =<10%)'
+########  trigger:
+########    - platform: numeric_state
+########      entity_id: device_tracker.iphonevandonovan
+########      value_template: '{{ state.attributes.battery }}'
+########      below: 10
+########  action:
+########    - service: notify.pushbullet
+########      data: {
+########	title: "Batterij laag iPhone Donovan",
+########	message: "Batterij iPhone Donovan ({{ states.sensor.battery_iphonedonovan.state }}%)",
+########	target: "device/iPhone van Donovan"
+########	}
+
+#- alias: 'Android laden aan'
+#  trigger:
+#    - platform: numeric_state
+#      entity_id: sensor.huawei_battery
+#      below: 5
+#  action:
+#    - service: switch.turn_on
+#      entity_id: switch.android_lader
+#    - service: notify.pushbullet
+#      data: {"title": "Huawei empty", "message":"Android lader wordt ingeschakeld. Huawei batterij waarde: {{ states.sensor.huawei_battery.state }}%", "target":"device/iPhone van Donovan"}
+#
+#
+#- alias: 'Android laden uit'
+#  trigger:
+#    - platform: numeric_state
+#      entity_id: sensor.huawei_battery
+#      above: 100
+#  action:
+#    - service: switch.turn_off
+#      entity_id: switch.android_lader
+#    - service: notify.pushbullet
+#      data: {"title": "Huawei full", "message":"Android lader wordt uitgeschakeld. Huawei batterij waarde: {{ states.sensor.huawei_battery.state }}%", "target":"device/iPhone van Donovan"}
+#    - service: switch.turn_on
+#      entity_id: switch.huawei_check_5min
+#
+#- alias: 'Huawei batterij state'
+#  trigger:
+#    - platform: state
+#      entity_id: sensor.huawei_battery_state
+#      to: discharing
+#  action:
+#    - service: notify.pushbullet
+#      data: {"title": "Huawei {{ states.sensor.huawei_battery_state.state }}", "message":"Huawei werkt op batterij. Huawei batterij waarde: {{ states.sensor.huawei_battery.state }}%", "target":"device/iPhone van Donovan"}
+#
+#- alias: 'Huawei batterij state'
+#  trigger:
+#    - platform: state
+#      entity_id: sensor.huawei_battery_state
+#      to: charing
+#  action:
+#    - service: notify.pushbullet
+#      data: {"title": "Huawei {{ states.sensor.huawei_battery_state.state }}", "message":"Huawei laad op. Huawei batterij waarde: {{ states.sensor.huawei_battery.state }}%", "target":"device/iPhone van Donovan"}
+
+#- alias: 'Beveiliging uit'
+#  trigger:
+#    - platform: state
+#      entity_id: device_tracker.iphonevandonovan, device_tracker.iphonevaningeli
+#      to: 'home'
+#  condition:
+#    condition: or
+#    conditions:
+#    - condition: state
+#      entity_id: input_boolean.bewaking
+#      state: 'on'
+#    - condition: state
+#      entity_id: device_tracker.iphonevaningeli
+#      state: 'home'
+#    - condition: state
+#      entity_id: device_tracker.iphonevandonovan
+#      state: 'home'
+#  action:
+#    - service: switch.turn_off
+#      entity_id: switch.motion
+#
+#- alias: 'Beveiliging aan'
+#  trigger:
+#    - platform: state
+#      entity_id: device_tracker.iphonevandonovan, device_tracker.iphonevaningeli
+#      state: 'home'
+#  condition:
+#    condition: and
+#    conditions:
+#    - condition: state
+#      entity_id: input_boolean.bewaking
+#      state: 'on'
+#    - condition: template
+#      value_template: "{% if states('device_tracker.iphonevandonovan') != 'home' %}true{% else %}false{% endif %}"
+#    - condition: template
+#      value_template: "{% if states('device_tracker.iphonevaningeli') != 'home' %}true{% else %}false{% endif %}"
+#  action:
+#    - service: switch.turn_on
+#      entity_id: switch.motion
+#
+#- alias: 'just a notify test'
+#  trigger:
+#    - platform: state
+#      entity_id: device_tracker.iphonevandonovan
+#      to: 'home'
+#    - platform: state
+#      entity_id: input_select.koken
+#      to: Donovan
+#  action:
+#    - service: notify.pushbullet
+#      data: {"message":"Een simple notify test.", "title": "just a notify test", "target": "device/Chrome"  }
+#      data: {
+#        message: "Jij kookt.",
+#        title: "test title",
+#        target: "device/Chrome"
+#        }
+
+
+
+#      data: {
+#        "message": "pushbullet test."
+#        "title": "Donovan."
+#      }
+#	"target": [
+#	  "device/iPhone van Donovan"
+#	  "email/dvesters@it-ernity.nl"
+#	  "channel/my_home"
+#	]
+      
+
+#- alias: 'Update Available Notifications'
+#  trigger:
+#    platform: state
+#    entity_id: updater.updater
+#  action:
+#    service: notify.pushbullet
+#    data: {
+#      message: "Update for Home Assistant is available.",
+#      target: "device/Phone van Donovan"
+#      }
+
+########- alias: 'Planten notificatie (Water geven)'
+########  trigger:
+########    - platform: state
+########      entity_id: device_tracker.iphonevaningeli
+########      to: 'home'
+########  condition:
+########    condition: and
+########    conditions:
+########      - condition: time
+########	after: '08:00:00'
+########	before: '12:00:00'
+########      - condition: state
+########	entity_id: input_boolean.reminderplantenwater
+########	state: 'on'
+########      - condition: time
+########	weekday:
+########	  - mon
+########  action:
+########    - service: notify.pushbullet
+########      data: {
+########	message: "Heej lief, wil je de planten water geven?",
+########	title: "Reminder: Planten hebben dorst",
+########	target: "device/iPhone van Ingeli"
+########	}
+########    - service: input_boolean.turn_off
+########      data:
+########	entity_id: input_boolean.reminderplantenwater
+
+
+########- alias: 'Planten notificatie (Controleer planten)'
+########  trigger:
+########    - platform: state
+########      entity_id: device_tracker.iphonevandonovan
+########      to: 'home'
+########  condition:
+########    condition: and
+########    conditions:
+########      - condition: time
+########	after: '09:00:00'
+########	before: '20:00:00'
+########      - condition: state
+########	entity_id: input_boolean.controleerplanten
+########	state: 'on'
+########      - condition: time
+########	weekday:
+########	  - mon
+########  action:
+########    - service: notify.pushbullet
+########      data: {
+########	title: "controleer planten",
+########	message: "Controleer of de planten water hebben gehad",
+########	target: "device/iPhone van Donovan"
+########	}
+########    - service: input_boolean.turn_off
+########      data:
+########	entity_id: input_boolean.controleerplanten
+
+
+########- alias: 'Planten reminder aan (boolean water geven en controle)'
+########  trigger:
+########    - platform: time
+########      hours: 20
+########      minutes: 00
+########      seconds: 00
+########  condition:
+########    condition: and
+########    conditions:
+########      - condition: time
+########	weekday:
+########	  - mon
+########  action:
+########    - service: input_boolean.turn_on
+########      data:
+########	entity_id: input_boolean.reminderplantenwater
+########    - service: input_boolean.turn_on
+########      data:
+########	entity_id: input_boolean.controleerplanten
+
+
+
+########- alias: 'Diskspace check 3GB'
+########  trigger:
+########    - platform: numeric_state
+########      entity_id: sensor.disk_free_
+########      below: 3
+########  action:
+########    - service: notify.pushbullet
+########      data: {
+########        title: "Disk space below 3GB ({{ states.sensor.disk_free__state.state }}GB)",
+########        message: "disk space low on Raspberry Pi",
+########        target: "device/iPhone van Donovan"
+########        }
+########
+########- alias: 'Diskspace check 2GB'
+########  trigger:
+########    - platform: numeric_state
+########      entity_id: sensor.disk_free_
+########      below: 2
+########  action:
+########    - service: notify.pushbullet
+########      data: {
+########        title: "Disk space below 2GB ({{ states.sensor.disk_free__state.state }}GB)",
+########        message: "disk space low on Raspberry Pi",
+########        target: "device/iPhone van Donovan"
+########        }
+########
+########- alias: 'Diskspace check 1GB'
+########  trigger:
+########    - platform: numeric_state
+########      entity_id: sensor.disk_free_
+########      below: 1
+########  action:
+########    - service: notify.pushbullet
+########      data: {
+########        title: "Disk space below 1GB ({{ states.sensor.disk_free__state.state }}GB)",
+########        message: "disk space low on Raspberry Pi",
+########        target: "device/iPhone van Donovan"
+########        }
+########
+#- alias: 'Chromecast test'
+#  trigger:
+#    - platform: state
+#      entity_id: input_boolean.playmedia
+#      state: 'on'
+#  action:
+#    - service: notify.telegram
+#      data:
+#        title: Send a document
+#        message: That's a example that sends a document.
+#        data:
+#          location:
+#            latitude: 32.87336
+#            longitude: 117.22743
+#          latitude: 12.222
+#{{ states.device_tracker.iphonevandonovan.attributes.latitude }}
+#          longitude: 12.222
+#{{ states.device_tracker.iphonevandonovan.attributes.longitude }}
+  #  service: media_player.play_media
+  #  data:
+  #    entity_id: media_player.cats_cast
+  #    media_content_id: https://youtu.be/I4cnu8fjPow
+  #    media_content_type: VIDEO
+
+
+########- alias: 'Bezoek notificatie (obv wifi_bezoekers)'
+########  trigger:
+########    platform: state
+########    entity_id: group.wifi_bezoekers
+########    state: 'home'
+########  action :
+########    service: notify.pushbullet
+########    data: {
+########      title: "We hebben bezoek",
+########      message: " Bezoek",
+#########      message: " entity_id: {{ trigger.entity_id }} to_entity: {{ trigger.to_state.entity_id }} to_object: {{ trigger.to_state.object_id }} to_state: {{ trigger.to_state.state }} ",
+#########      message: "{{ group.wifi_bezoekers }}, {{ states.group.wifi_bezoekers }},{{ status.group.wifi_bezoekers.state }}",
+########      target: "device/iPhone van Donovan"
+########      }
+
+
+## Notify when Paulus leaves the house in the evening
+#- alias: 'Leave Home notification'
+#  trigger:
+#    platform: zone
+#    event: leave
+#    zone: zone.home
+#    entity_id: device_tracker.paulus
+#  condition:
+#    condition: time
+#    after: '20:00'
+#  action:
+#    service: notify.notify
+#    data:
+#      message: 'Paulus left the house'

@@ -1,0 +1,253 @@
+  Lampen Woonkamer:
+  #  - switch.kerstboom
+    - switch.bank_links
+    - switch.bank_rechts
+    - switch.floortje
+    - switch.buiten
+
+  Battery State:
+    - sensor.battery_iphonedonovan
+    - sensor.battery_iphoneingeli
+#    - sensor.huawei_battery
+
+  Device Location:
+    - device_tracker.iphonevandonovan
+    - device_tracker.iphonevaningeli
+    - device_tracker.android2602ca7ea912c81ehome
+    - device_tracker.androidfa7dee36a4bee607home
+    - device_tracker.delllaptophome
+    - device_tracker.1921682110
+    - device_tracker.chromecasthome_2
+    - device_tracker.brwb01041cf1b03home
+    - device_tracker.19216821
+    - device_tracker.mijnmodemkpnhome
+    - device_tracker.chromecasthome
+    - device_tracker.5ccf7f0385c6
+    - device_tracker.806ab0bbc775
+    - device_tracker.chiphome
+
+  Wifi Bezoekers:
+    - device_tracker.19216828
+    - device_tracker.android8d0cf7e65c6f490bhome
+    - device_tracker.iphonevanerikhome_2
+    - device_tracker.8086f23de52d
+    - device_tracker.5ccf7f871eb8
+    - device_tracker.androiddc378c01573f24fbhome
+    - device_tracker.jorissiphonehome
+    - device_tracker.itlt76home
+    - device_tracker.iphonevanerikhome
+    - device_tracker.ronaldhome
+    - device_tracker.android9988f842a30c6d0ehome
+    - device_tracker.androiddd46a8ab757dc0fbhome
+    - device_tracker.derijsjssiphonehome
+    - device_tracker.androida84a3d8201d8c75fhome
+    - device_tracker.androidc4cb290288052c82home
+    - device_tracker.android880575954ce596c9home
+    - device_tracker.4c57caadfa2f
+    - device_tracker.iphonemarijehome
+
+  Klimaat thuis:
+    - sensor.temperature
+    - sensor.humidity
+    - sun.sun
+    - sensor.buienradar
+    - sensor.next_rising
+    - sensor.next_setting
+    - sensor.owm_cloud_coverage
+    - sensor.owm_condition
+    - sensor.owm_humidity
+    - sensor.owm_pressure
+    - sensor.owm_rain
+    - sensor.owm_snow
+    - sensor.owm_temperature
+    - sensor.owm_wind_speed
+
+#  Adapter Android:
+#    - switch.android_lader
+#    - sensor.huawei_check_interval
+#    - sensor.huawei_battery_status
+#    - sensor.huawei_battery
+
+#  Tijd:
+#    - sensor.time
+#    - sensor.date
+#    - sensor.epoch
+
+  Raspberry Disk:
+    - sensor.disk_use_
+    - sensor.disk_use__2
+    - sensor.disk_free_
+
+#  Raspberry Memory:
+#    - sensor.ram_free
+#    - sensor.ram_use
+#    - sensor.ram_use_2
+#    - sensor.swap_free
+#    - sensor.swap_use
+#    - sensor.swap_use_2
+
+# Raspberry Network:
+#    - sensor.ipv4_address_eth0
+#    - sensor.packets_received_eth0
+#    - sensor.received_eth0
+#    - sensor.packets_sent_eth0
+#    - sensor.sent_eth0
+#    - sensor.speedtest_download
+#    - sensor.speedtest_ping
+#    - sensor.speedtest_upload
+
+#  Raspberry System:
+#    - sensor.cpu_use
+#    - sensor.ram_use
+#    - sensor.swap_use
+#    - sensor.last_boot
+#    - sensor.since_last_boot
+#    - sensor.process_motion
+#    - sensor.process_apache2
+#    - sensor.process_mysql
+
+#  Raspberry All:
+#    - sensor.cpu_use
+#    - sensor.disk_free_
+#    - sensor.disk_use_
+#    - sensor.disk_use__2
+#    - sensor.ipv4_address_eth0
+#    - sensor.last_boot
+#    - sensor.light
+#    - sensor.packets_recieved_eth0
+#    - sensor.packets_sent_eth0
+#    - sensor.process_motion
+#    - sensor.process_apache2
+#    - sensor.process_mysql
+#    - sensor.ram_free
+#    - sensor.ram_use
+#    - sensor.ram_use_2
+#    - sensor.recieved_eth0
+#    - sensor.sent_eth0
+#    - sensor.since_last_boot
+#    - sensor.speedtest_download
+#    - sensor.speedtest_ping
+#    - sensor.speedtest_upload
+#    - sensor.swap_free
+#    - sensor.swap_use
+#    - sensor.swap_use_2
+
+#  Weer Info:
+#    - sun.sun
+#    - sensor.forecastio_summary
+#    - sensor.forecastio_temperature
+#    - sensor.forecastio_apparent_temperature
+#    - sensor.forecastio_icon
+#    - sensor.forecastio_precip
+#    - sensor.forecastio_precip_probability
+#    - sensor.forecastio_precip_intensity
+#    - sensor.forecastio_humidity
+#    - sensor.forecastio_dew_point
+#    - sensor.forecastio_cloud_coverage
+#    - sensor.forecastio_nearest_storm_distance
+#    - sensor.forecastio_nearest_storm_bearing
+#    - sensor.forecastio_wind_speed
+#    - sensor.forecastio_wind_bearing
+#    - sensor.forecastio_visibility
+#    - sensor.forecastio_ozone
+#    - sensor.forecastio_pressure
+
+  traveltime:
+    - sensor.donovan_naar_huis
+    - sensor.donovan_naar_ingeli
+    - sensor.ingeli_naar_huis
+
+#  speedtest:
+#    - sensor.speedtest_ping    
+#    - sensor.speedtest_download
+#    - sensor.speedtest_upload
+#
+#  applications:
+#    - switch.motion
+#    - switch.apache2
+#    - switch.mysql
+#
+#  Motion:
+#    - switch.motion
+#    - sensor.process_motion
+#
+
+  Termostaat:
+      - input_boolean.kachelauto
+      - sensor.temperature
+      - switch.kachel
+      - sensor.min_marge_temperatuur
+      - sensor.target_temperatuur
+      - input_slider.temp_regel
+
+  Kachel:
+    name: Verwarming
+    view: yes
+    icon: mdi:radiator
+    entities:
+      - group.termostaat
+      - group.lampen_woonkamer
+
+  Schakelaars:
+    name: schakelaar
+    view: yes
+    icon: mdi:toggle-switch
+    entities:
+      - group.tijd
+      - group.lampen_woonkamer
+      - group.lampen_buiten
+      - group.adapter_android
+      - group.applications
+
+  Thuis:
+    view: yes
+    icon: mdi:home
+    entities:
+      - group.klimaat_thuis
+#      - group.tijd
+      - group.lampen_woonkamer
+#      - group.lampen_buiten
+#      - group.adapter_android
+#      - media_player.cats_cast
+#      - input_select.living_room_preset
+#      - input_select.koken
+      - group.all_devices
+
+#  Media:
+#    name: Media
+#    view: yes
+#    icon: mdi:video
+#    entities:
+#      - camera.home
+#      - media_player.cats_cast
+#      - group.motion
+
+#  Network:
+#    name: Network
+#    view: yes
+#    icon: mdi:access-point-network
+#    entities:
+#      - group.device_location
+#      - group.wifi_bezoekers
+#      - group.all_devices
+#      - group.speedtest
+
+#  Automation:
+#    name: Automation
+#    view: yes
+#    icon: mdi:raspberrypi
+#    entities:
+#      - group.raspberry_all
+#      - group.raspberry_disk
+#      - group.raspberry_memory
+#      - group.raspberry_network
+#      - group.raspberry_system
+#      - group.applications
+
+  Weather:
+    name: Weather
+    view: yes
+    icon: mdi:weather-sunny
+    entities:
+      - group.weer_info
+      - group.klimaat_thuis

@@ -1,0 +1,78 @@
+
+- alias: 'Planten notificatie (Water geven)'
+  trigger:
+    - platform: state
+      entity_id: device_tracker.iphonevaningeli
+      to: 'home'
+  condition:
+    condition: and
+    conditions:
+      - condition: time
+        after: '08:00:00'
+        before: '12:00:00'
+      - condition: state
+        entity_id: input_boolean.reminderplantenwater
+        state: 'on'
+      - condition: time
+        weekday:
+          - mon
+  action:
+    - service: notify.pushbullet
+      data: {
+        message: "Heej lief, wil je de planten water geven?",
+        title: "Reminder: Planten hebben dorst",
+        target: "device/iPhone van Ingeli"
+        }
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.reminderplantenwater
+
+- alias: 'Planten notificatie (Controleer planten)'
+  trigger:
+    - platform: state
+      entity_id: device_tracker.iphonevandonovan
+      to: 'home'
+  condition:
+    condition: and
+    conditions:
+      - condition: time
+        after: '09:00:00'
+        before: '20:00:00'
+      - condition: state
+        entity_id: input_boolean.controleerplanten
+        state: 'on'
+      - condition: time
+        weekday:
+          - mon
+  action:
+    - service: notify.pushbullet
+      data: {
+        title: "controleer planten",
+        message: "Controleer of de planten water hebben gehad",
+        target: "device/iPhone van Donovan"
+        }
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.controleerplanten
+
+
+- alias: 'Planten reminder aan (boolean water geven en controle)'
+  trigger:
+    - platform: time
+      hours: 20
+      minutes: 00
+      seconds: 00
+  condition:
+    condition: and
+    conditions:
+      - condition: time
+        weekday:
+          - mon
+  action:
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.reminderplantenwater
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.controleerplanten
+

@@ -1,0 +1,241 @@
+homeassistant:
+  name: Main
+  latitude: !secret latitude
+  longitude: !secret longitude
+  elevation: !secret elevation
+  unit_system: metric
+  time_zone: Europe/Amsterdam
+  customize: !include customize.yaml
+
+
+#########################################
+#	Enable/Disable Features		#
+#########################################
+frontend:
+
+updater:
+
+sun:
+
+history:
+recorder:
+  purge_days: 30
+
+logbook:
+
+http:
+  api_password: !secret api_password
+  ssl_certificate: !secret ssl_certificate
+  ssl_key: !secret ssl_key
+
+zeroconf:
+
+#development: 1
+
+#conversation:
+
+#introduction:
+
+#discovery:
+#  hidden: false
+
+ios:
+
+
+
+#########################################
+#	Include config			#
+#########################################
+### DIRECTORY's ###
+automation: !include_dir_merge_list automation
+sensor: !include_dir_merge_list sensors
+zone: !include_dir_merge_list zones
+
+### Files ###
+input_slider: !include input_slider.yaml
+input_boolean: !include input_boolean.yaml
+group: !include groups.yaml
+#scene: !include scenes.yaml
+
+
+
+#########################################
+#	Conversations			#
+#########################################
+conversation:
+
+
+#########################################
+#	MQTT				#
+#########################################
+mqtt:
+  broker: 127.0.0.1
+  port: 1883
+  client_id: !secret mqttclient_id
+  keepalive: 60
+  protocol: 3.1
+  username: !secret mqttusername
+  password: !secret mqttpassword
+
+
+#########################################
+#	Panel				#
+#########################################
+### Custom Panel ###
+#panel_custom:
+#  - name: hello
+#    sidebar_title: Hello World
+#    sidebar_icon: mdi:hand-pointing-right
+#    url_path: hello
+#  - name: react
+#    sidebar_title: react
+#    sidebar_icon: mdi:hand-pointing-right
+#    url_path: react
+#    config:
+#      title: hello
+#  - name: tablet
+#    sidebar_title: teblet
+#    sidebar_icon: mdi:tablet
+#    url_path: tablet
+
+### iframe Panel ###
+#panel_iframe:
+#   kpn:
+#     title: 'KPN Itv Online'
+#     icon: mdi:television
+#     url: 'https://www.itvonline.nl/'
+#   spotify:
+#     title: 'Spotify'
+#     icon: mdi:spotify
+#     url: 'https://www.spotify.com/nl/'
+
+
+
+#########################################
+#	Switch				#
+#########################################
+switch:
+  platform: command_line
+  switches:
+    alle_lampen:
+      command_on: /usr/local/bin/kaku_alles "1 2 5" on
+      command_off: /usr/local/bin/kaku_alles "1 2 3 5" off
+      command_state: grep -q on /run/kaku/* ;echo $?
+    bank_links:
+      command_on: /usr/local/bin/kaku a 1 on && echo on > /run/kaku/1
+      command_off: /usr/local/bin/kaku a 1 off && echo off > /run/kaku/1
+      command_state: grep -q on /run/kaku/1 ;echo $?
+      value_template: '{{ value == "0" }}'
+    bank_rechts:
+      command_on: /usr/local/bin/kaku a 5 on && echo on > /run/kaku/5
+      command_off: /usr/local/bin/kaku a 5 off && echo off > /run/kaku/5
+      command_state: grep -q on /run/kaku/5 ;echo $?
+      value_template: '{{ value == "0" }}'
+    floortje:
+      command_on: /usr/local/bin/kaku a 2 on && echo on > /run/kaku/2
+      command_off: /usr/local/bin/kaku a 2 off && echo off > /run/kaku/2
+      command_state: grep -q on /run/kaku/2 ;echo $?
+      value_template: '{{ value == "0" }}'
+    buiten:
+      command_on: /usr/local/bin/kaku a 3 on && echo on > /run/kaku/3
+      command_off: /usr/local/bin/kaku a 3 off && echo off > /run/kaku/3
+      command_state: grep -q on /run/kaku/3 ;echo $?
+      value_template: '{{ value == "0" }}'
+    kachel:
+      command_on: /usr/local/bin/relay_on.py
+      command_off: /usr/local/bin/relay_off.py
+      command_state: gpio -g read 14
+      value_template: '{{ value == "1" }}'
+#    kerstboom:
+#      command_on: /usr/local/bin/kaku a 6 on && echo on > /run/kaku/6
+#      command_off: /usr/local/bin/kaku a 6 off && echo off > /run/kaku/6
+#      command_state: grep -q on /run/kaku/6 ;echo $?
+#      value_template: '{{ value == "0" }}'
+#    android_lader:
+#      command_on: /usr/local/bin/kaku a 4 on && echo on > /run/kaku/4
+#      command_off: /usr/local/bin/kaku a 4 off && echo off > /run/kaku/4
+#      command_state: grep -q on /run/kaku/4 ;echo $?
+#      value_template: '{{ value == "0" }}'
+#    motion:
+#      command_on: sudo /etc/init.d/motion restart
+#      command_off: sudo /etc/init.d/motion stop
+#      command_state: sudo pgrep motion > /dev/null ;echo $?
+#      value_template: '{{ value == "0" }}'
+#    apache2:
+#      command_on: sudo service apache2 start
+#      command_off: sudo service apache2 stop
+#      command_state: sudo pgrep apache2 > /dev/null ;echo $?
+#      value_template: '{{ value == "0" }}'
+#    mysql:
+#      command_on: sudo service mysql start
+#      command_off: sudo service mysql stop
+#      command_state: sudo pgrep mysql > /dev/null ;echo $?
+#      value_template: '{{ value == "0" }}'
+
+
+#########################################
+#	Device				#
+#########################################
+device_tracker:
+  platform: icloud
+  username: !secret icloud_donovan_username
+  password: !secret icloud_donovan_password
+  account_name: !secret icloud_donovan_account_name
+
+device_tracker 2:
+  platform: icloud
+  username: !secret icloud_ingeli_username
+  password: !secret icloud_ingeli_password
+  account_name: !secret icloud_ingeli_account_name
+
+device_tracker 3:
+  platform: nmap_tracker
+  hosts: !secret nmap_hosts
+  home_interval: 10
+
+
+#########################################
+#	Notify				#
+#########################################
+notify:
+  - platform: pushbullet
+    api_key: !secret api_key_pushbullet
+    name: pushbullet
+  - name: telegram
+    platform: telegram
+    api_key: !secret telegram_api_key
+    chat_id: !secret telegram_chat_id
+
+
+#########################################
+#	TEST				#
+#########################################
+#input_select:
+#  koken:
+#    name: 'Wie kookt er'
+#    options:
+#     - Ingeli
+#     - Donovan
+#    initial: Ingeli
+#    icon: mdi:panda
+
+#climate:
+#  - platform: generic_thermostat
+#    name: Study
+#    heater: switch.study_heater
+#    target_sensor: sensor.study_temperature
+#    min_temp: 15
+#    max_temp: 21
+#    target_temp: 17
+#    tolerance: 0.3
+#    min_cycle_duration:
+#      seconds: 5
+ 
+#camera:
+#  platform: mjpeg
+#  mjpeg_url: http://192.168
+#  name: Home
+
+
+#notify 1:
+#  - platform: ios

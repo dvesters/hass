@@ -1,0 +1,231 @@
+
+#light
+#     switch.kerstboom:
+#       icon: mdi:pine-tree
+#       entity_picture: '/local/current.png'
+#       entity_picture: 'http://gadgets.buienradar.nl/gadget/weathersymbol'
+#       friendly_name: 'Kerstboom'
+     switch.bank_links:
+       icon: mdi:lightbulb
+       friendly_name: 'Bank links'
+     switch.bank_rechts:
+       icon: mdi:lightbulb
+       friendly_name: 'Bank rechts'
+     switch.buiten:
+       icon: mdi:lightbulb
+       friendly_name: 'Tafel buiten'
+     switch.floortje:
+       icon: mdi:lightbulb
+       friendly_name: 'Speelhoek Floortje'
+
+#devices
+     device_tracker.android2602ca7ea912c81ehome:
+       icon: mdi:tablet-android
+       friendly_name: 'Tablet Denver'
+     device_tracker.19216828:
+       icon: mdi:account-check
+       friendly_name: 'Huawei Erik Rasing'
+     device_tracker.android8d0cf7e65c6f490bhome:
+       icon: mdi:account-alert
+       friendly_name: 'android8d0cf7e65c6f490bhome'
+     device_tracker.iphonevanerikhome_2:
+       icon: mdi:account-check
+       friendly_name: 'OLD - Iphone Erik Rasing 2'
+     device_tracker.8086f23de52d:
+       icon: mdi:account-off
+       friendly_name: '8086f23de52d'
+     device_tracker.5ccf7f871eb8:
+       icon: mdi:account-alert
+       friendly_name: '5ccf7f871eb8'
+     device_tracker.iphonevandonovan:
+       icon: mdi:cellphone-iphone
+       friendly_name: 'Donovan iPhone'
+     device_tracker.iphonevaningeli:
+       icon: mdi:cellphone-iphone
+       friendly_name: 'Ingeli iPhone'
+     device_tracker.androidfa7dee36a4bee607home:
+       icon: mdi:tablet-android
+       friendly_name: 'Tablet st1001'
+     device_tracker.delllaptophome:
+       icon: mdi:laptop-chromebook
+       friendly_name: 'Dell Laptop'
+     device_tracker.1921682110:
+       icon: mdi:laptop
+       friendly_name: 'Lenovo laptop'
+     device_tracker.brwb01041cf1b03home:
+       icon: mdi:printer
+       friendly_name: 'Brother Printer'
+     device_tracker.mijnmodemkpnhome:
+       icon: mdi:router-wireless
+       friendly_name: 'KPN Modem'
+     device_tracker.chromecasthome_2:
+       icon: mdi:google-chrome
+       friendly_name: 'Cats Cast'
+     device_tracker.androiddc378c01573f24fbhome:
+       icon: mdi:voice
+       friendly_name: 'Sander'
+     device_tracker.iphonevanerikhome:
+       icon: mdi:account-check
+       friendly_name: 'Erik Rasing'
+     device_tracker.android9988f842a30c6d0ehome:
+       icon: mdi:account-check
+       friendly_name: 'Mam'
+     device_tracker.ronaldhome:
+       icon: mdi:account-check
+       friendly_name: 'Pa'
+     device_tracker.itlt76home:
+       icon: mdi:laptop-chromebook
+       friendly_name: 'Ben Laptop werk'
+     device_tracker.jorissiphonehome:
+       icon: mdi:account-check
+       friendly_name: 'Joris'
+     device_tracker.4c57caadfa2f:
+       icon: mdi:account-check
+       friendly_name: 'Marije'
+     device_tracker.iphonemarijehome:
+       icon: mdi:account-off
+       friendly_name: 'Marije-OUD'
+     device_tracker.5ccf7f0385c6:
+       icon: mdi:chip
+       friendly_name: 'esp8266 Lolin DHT'
+     device_tracker.806ab0bbc775:
+       icon: mdi:chip
+       friendly_name: 'esp8266 D1 mini'
+     device_tracker.chiphome:
+       icon: mdi:chip
+       friendly_name: 'C.H.I.P'
+#     device_tracker.5ccf7f0385c6:
+#       icon: mdi:chip
+#       friendly_name: 'esp8266 Lolin'
+
+
+     device_tracker.android880575954ce596c9home:
+       icon: mdi:account-check
+       friendly_name: 'Marnix'
+
+     device_tracker.androida84a3d8201d8c75fhome:
+       icon: mdi:account-alert
+       #icon: mdi:account-check
+       friendly_name: 'Maurice ? '
+
+     device_tracker.androidc4cb290288052c82home:
+       icon: mdi:account-alert
+       #icon: mdi:account-check
+       friendly_name: 'Nino ? '
+
+     device_tracker.derijsjssiphonehome:
+       icon: mdi:account-alert
+       #icon: mdi:account-check
+       friendly_name: 'Hinke'
+
+     device_tracker.androiddd46a8ab757dc0fbhome:
+       icon: mdi:account-alert
+       #icon: mdi:account-check
+       friendly_name: 'Niels ?'
+
+
+#Sensor
+
+     sensor.next_rising:
+       friendly_name: Zonsopkomst
+       icon: mdi:weather-sunset-up
+     sensor.next_setting:
+       friendly_name: 
+       icon: mdi:Zonsondergang
+     sensor.min_marge_temperatuur:
+       friendly_name: Minimum (CV aan) temp.
+       icon: mdi:minus 
+     sensor.target_temperatuur:
+       friendly_name: Maximum (CV uit) temp.
+       icon: mdi:plus 
+     sensor.owm_cloud_coverage:
+       friendly_name: Buiten-bewolkt
+       icon: mdi:water-percent
+     sensor.owm_condition:
+       friendly_name: Buiten-omstandigheden
+       icon: mdi:water-percent
+     sensor.owm_humidity:
+       friendly_name: Buiten-vochtigheid
+       icon: mdi:water-percent
+     sensor.owm_pressure:
+       friendly_name: Buiten-luchtdruk
+       icon: mdi:water-percent
+     sensor.owm_rain:
+       friendly_name: Buiten-waterpercentage
+       icon: mdi:water-percent
+     sensor.owm_snow:
+       friendly_name: Buiten-sneeuw
+       icon: mdi:water-percent
+     sensor.owm_temperature:
+       friendly_name: Buiten-temperatuur
+       icon: mdi:water-percent
+     sensor.owm_wind_speed:
+       friendly_name: Buiten-windsnelheid
+       icon: mdi:water-percent
+     sensor.humidity:
+       friendly_name: 'Vochtigheid woonkamer'
+       icon: mdi:water-percent
+     sensor.temperature:
+       friendly_name: 'Temperatuur woonkamer'
+       icon: mdi:temperature-celsius
+     sensor.buienradar:
+       friendly_name: 'Buienradar'
+       icon: mdi:weather-snowy-rainy
+     sensor.battery_iphonedonovan:
+       friendly_name: 'Donovan iPhone battery'
+       icon: mdi:battery
+     sensor.battery_iphoneingeli:
+       friendly_name: 'Ingeli iPhone battery'
+       icon: mdi:battery
+#     sensor.huawei_battery:
+#       friendly_name: 'Donovan Huawei battey'
+#       icon: mdi:battery
+#     sensor.huawei_battery_status:
+#       friendly_name: 'Donovan Huawei battey status'
+#       icon: mdi:battery-charging-60
+#     sensor.weather_temperature:
+#       friendly_name: 'Outdoor Temperature'
+#     sensor.weather_summary:
+#       icon: mdi:weather-sunny
+#     sensor.weather_hourly_summary:
+#       icon: mdi:weather-sunny
+#     sensor.weather_minutely_summary:
+#       icon: mdi:weather-sunny
+#     sensor.weather_daily_summary:
+#       icon: mdi:weather-sunny
+#     sensor.weather_apparent_temperature:
+#       icon: mdi:thermometer-lines
+#     sensor.weather_precip:
+#       icon: mdi:weather-pouring
+#     sensor.weather_precip_probability:
+#       icon: mdi:weather-pouring
+#     sensor.weather_precip_intensity:
+#       icon: mdi:weather-pouring
+#       friendly_name: 'Rainfall'
+#     sensor.weather_humidity:
+#       icon: mdi:water-percent
+#       friendly_name: 'Outdoor Humidity'
+#     sensor.weather_cloud_coverage:
+#       icon: mdi:weather-cloudy
+#     sensor.weather_nearest_storm_distance:
+#       icon: mdi:weather-lightning
+#     sensor.weather_wind_speed:
+#       icon: mdi:weather-windy
+#     sensor.main_floor_humidity:
+#       icon: mdi:water-percent
+#     sensor.weather_wind_bearing:
+#       icon: mdi:weather-windy
+#     sensor.weather_ozone:
+#       icon: mdi:cloud
+#     sensor.weather_pressure:
+#       icon: mdi:weight
+
+#Hidden
+     device_tracker.iphonevndonovanhome:
+      hidden: true
+     device_tracker.iphonevaningelihome:
+      hidden: true
+#     device_tracker.chromecast.home:
+#      hidden: true
+     sensor.donovan_home:
+      hidden: true

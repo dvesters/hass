@@ -1,0 +1,36 @@
+
+- alias: 'Ingeli niet thuis'
+  trigger:
+    - platform: state
+      entity_id: device_tracker.iphonevaningeli
+      from: 'home'
+  condition:
+    condition: and
+    conditions:
+    - condition: template
+      value_template: "{% if states('device_tracker.iphonevandonovan') != 'home' %}true{% else %}false{% endif %}"
+  action:
+    - service: notify.pushbullet
+      data: {
+        title: "Ingeli vertrekt",
+        message: "Ingeli vertrekt",
+        target: "device/iPhone van Donovan"
+        }
+
+- alias: 'Ingeli thuis'
+  trigger:
+    - platform: state
+      entity_id: device_tracker.iphonevaningeli
+      to: 'home'
+  condition:
+    condition: and
+    conditions:
+    - condition: template
+      value_template: "{% if states('device_tracker.iphonevandonovan') != 'home' %}true{% else %}false{% endif %}"
+  action:
+    - service: notify.pushbullet
+      data: {
+        title: "Ingeli is thuis",
+        message: "Ingeli is thuis",
+        target: "device/iPhone van Donovan"
+        }
